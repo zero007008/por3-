@@ -1,721 +1,1055 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Portfolio - John Doe</title>
-    <link rel="stylesheet" href="/bootstrap-5.3.7-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="/bootstrap-5.3.7-dist/css/bootstrap.rtl.css">
-    <link rel="stylesheet" href="/bootstrap-5.3.7-dist/css/bootstrap@5.2.0.min (1).css">
-      <script src="https://cdn.tailwindcss.com"></script>  
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">  
-    <style>
-        :root {
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --neumorph-shadow-light: inset 5px 5px 10px rgba(255, 255, 255, 0.2), inset -5px -5px 10px rgba(0, 0, 0, 0.1);
-            --neumorph-shadow-dark: 5px 5px 10px rgba(0, 0, 0, 0.1), -5px -5px 10px rgba(255, 255, 255, 0.2);
-            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-secondary: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            --animation-delay: 0.2s;
-        }
-        
-        body {
-            margin: 0;
-            padding: 0;
-            background: var(--gradient-primary);
-            min-height: 100vh;
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-        }
-        
-        /* Custom animations */
-        @keyframes float {
-            
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-            
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-        
-        @keyframes slideInFromLeft {
-            from {
-                transform: translateX(-100%);
-                opacity: 0;
-            }
-            
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
-        @keyframes slideInFromRight {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
-        @keyframes bounceIn {
-            0% {
-                transform: scale(0.3);
-                opacity: 0;
-            }
-            
-            50% {
-                transform: scale(1.05);
-            }
-            
-            70% {
-                transform: scale(0.9);
-            }
-            
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-        
-        @keyframes gradientShift {
-            0% {
-                background-position: 0% 50%;
-            }
-            
-            50% {
-                background-position: 100% 50%;
-            }
-            
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-        
-        .hero-bg {
-            background: url(file_000000005d0461fd9988f6636e3f42d1.png') center/cover no-repeat;
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-        }
-        
-        .hero-bg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 1;
-        }
-        
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-        
-        .section {
-            padding: 5rem 0;
-            position: relative;
-        }
-        
-        .floating {
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        .slide-in-left {
-            animation: slideInFromLeft 1s ease-out;
-        }
-        
-        .slide-in-right {
-            animation: slideInFromRight 1s ease-out;
-        }
-        
-        .bounce-in {
-            animation: bounceIn 1s ease-out;
-        }
-        
-        .glassmorphism {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-        }
-        
-        .neumorphism {
-            background: #e0e0e0;
-            border-radius: 20px;
-            box-shadow: var(--neumorph-shadow-dark);
-            transition: all 0.3s ease;
-        }
-        
-        .neumorphism:hover {
-            box-shadow: var(--neumorph-shadow-light);
-            transform: translateY(-5px);
-        }
-        
-        .project-card {
-            position: relative;
-            overflow: hidden;
-            border-radius: 20px;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            margin-bottom: 20px;
-        }
-        .project-card img {
-            width:100%;
-        }
-        .project-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-        }
-        
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transform: rotate(45deg);
-            transition: 0.6s;
-            z-index: 1;
-            
-        }
-        
-        .project-card:hover::before {
-            opacity: 1;
-            left: 50%;
-        }
-        
-        .project-card-content {
-            position: relative;
-            z-index: 2;
-            padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.95);
-        }
-        
-        .skill-icon {
-            transition: all 0.3s ease;
-            animation: bounceIn 1s ease-out;
-        }
-        
-        .skill-icon:hover {
-            transform: scale(1.2) rotate(15deg);
-            color: #ffd700;
-        }
-        
-        .navbar {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            height:5rem;
-        }
-        
-        .logo {
-            background: var(--gradient-secondary);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 2rem;
-            font-weight: bold;
-            animation: gradientShift 3s ease infinite;
-            background-size: 200% 200%;
-        }
-        
-        .btn-neumorph {
-            background: #e0e0e0;
-            border-radius: 12px;
-            box-shadow: var(--neumorph-shadow-dark);
-            transition: all 0.3s ease;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            color: #555;
-        }
-        
-        .btn-neumorph:hover {
-            box-shadow: var(--neumorph-shadow-light);
-            background: #f0f0f0;
-            transform: translateY(-2px);
-        }
-        
-        .skill-bar {
-            height: 8px;
-            border-radius: 4px;
-            background: linear-gradient(to right, #ff6b6b, #4ecdc4);
-            transition: width 2s ease-out;
-            width: 0%;
-        }
-        
-        .theme-toggle {
-            background: var(--neumorph-shadow-dark);
-            border-radius: 50%;
-            width: 3rem;
-            height: 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-        
-        .theme-toggle:hover {
-            background: var(--neumorph-shadow-light);
-            transform: scale(1.1);
-        }
-        
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            pointer-events: none;
-            animation: particleAnimation 10s infinite linear;
-        }
-        
-        @keyframes particleAnimation {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 1;
-            }
-            
-            100% {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-        
-        .contact-form {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .contact-form input,
-        .contact-form textarea {
-            border: none;
-            border-radius: 10px;
-            background: #f8f9fa;
-            transition: all 0.3s ease;
-            padding: 1rem;
-            font-size: 1rem;
-        }
-        
-        .contact-form input:focus,
-        .contact-form textarea:focus {
-            background: #fff;
-            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
-            outline: none;
-        }
-        
-        .social-icon {
-            transition: all 0.3s ease;
-        }
-        
-        .social-icon:hover {
-            transform: translateY(-5px);
-            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
-        }
-        
-        /* Dark mode styles */
-        .dark-mode body {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: #ffffff;
-        }
-        
-        .dark-mode .section {
-            background-color: rgba(0, 0, 0, 0.1);
-        }
-        
-        .dark-mode .navbar {
-            background: rgba(0, 0, 0, 0.3);
-        }
-        img{
-            height: 180px;
-            width: 120px;
-        }
-        .hidden{
-            display: none;
-        }
-        @media (min-width: 700px){
-            .hidden{
-                display: flex;
-            }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Yoko — Neon Cyberpunk Traveler Portfolio</title>
+  
+  <!--
+  Offline-first single-file portfolio.
+  - All icons are inline SVG.
+  - All CSS and JS are internal.
+  - No external fonts or libraries.
+-->
+  
+  <style>
+    /* -------------------------
+     Variables & Base Reset
+     ------------------------- */
+    :root {
+      --bg-1: #050510;
+      --bg-2: #0a0a1a;
+      --neon-blue: #00eeff;
+      --neon-magenta: #ff00ff;
+      --neon-green: #39ff14;
+      --glass: rgba(255, 255, 255, 0.03);
+      --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+      --max-width: 1000px;
+    }
     
+    * {
+      box-sizing: border-box
+    }
+    
+    html,
+    body {
+      height: 100%
+    }
+    
+    body {
+      margin: 0;
+      font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(0, 238, 255, 0.04), transparent),
+        radial-gradient(1000px 500px at 90% 90%, rgba(255, 0, 255, 0.03), transparent),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2));
+      color: #e6f7ff;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.45;
+    }
+    
+    /* -------------------------
+     Utility & Layout
+     ------------------------- */
+    .wrap {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 28px
+    }
+    
+    header.fixed-nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(10, 10, 20, 0.45), rgba(0, 0, 0, 0.15));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    a{
+      text-decoration: none;
+      
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px
+    }
+    
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+    
+    .brand .logo {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-magenta));
+      border-radius: 8px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6), 0 0 14px rgba(0, 238, 255, 0.12) inset;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: #001;
+      font-family: "Courier New", monospace;
+      letter-spacing: 1px;
+    }
+    
+    .brand span {
+      font-weight: 600;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      color: var(--neon-blue)
+    }
+    
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 18px;
+      margin: 0;
+      padding: 0;
+      align-items: center
+    }
+    
+    nav a {
+      color: inherit;
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 8px;
+      transition: all .18s ease
+    }
+    
+    nav a:hover {
+      box-shadow: 0 0 18px rgba(0, 238, 255, 0.12);
+      transform: translateY(-2px)
+    }
+    
+    .cta-btn {
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--neon-green), var(--neon-blue));
+      color: #001;
+      font-weight: 700
+    }
+    
+    /* Hamburger (mobile) */
+    .hamburger {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer
+    }
+    
+    .hamburger svg {
+      width: 22px;
+      height: 22px
+    }
+    
+    /* nav mobile drawer */
+    .mobile-drawer {
+      display: none;
+      position: fixed;
+      top: 68px;
+      right: 12px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.02));
+      border-radius: 12px;
+      padding: 12px;
+      box-shadow: var(--card-shadow);
+      z-index: 999
+    }
+    
+    /* -------------------------
+     Hero Section
+     ------------------------- */
+    main {
+      padding-top: 84px
+    }
+    
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 32px;
+      align-items: center;
+      padding: 48px 0;
+    }
+    
+    .hero-card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.06));
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .hero h1 {
+      font-size: clamp(28px, 6vw, 42px);
+      margin: 0 0 8px;
+      font-family: "Courier New", monospace
+    }
+    
+    .hero p {
+      margin: 0 0 18px;
+      opacity: 0.95
+    }
+    
+    .hero .cta {
+      display: flex;
+      gap: 12px;
+      align-items: center
+    }
+    
+    /* glowing halo behind hero */
+    .halo {
+      position: absolute;
+      right: -80px;
+      top: -60px;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, rgba(0, 238, 255, 0.08), transparent 30%),
+        radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.06), transparent 30%);
+      filter: blur(30px);
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+    
+    /* small profile card */
+    .profile-preview {
+      border-radius: 12px;
+      padding: 14px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.02));
+      text-align: center
+    }
+    
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 20px;
+      margin: 0 auto 10px;
+      display: block;
+      background: linear-gradient(135deg, var(--neon-magenta), var(--neon-blue));
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 22px rgba(255, 0, 255, 0.06) inset;
+    }
+    
+    .avatar small {
+      display: block;
+      font-size: 12px;
+      color: #000;
+      padding-top: 8px;
+      opacity: 0.85
+    }
+    
+    /* -------------------------
+     Sections
+     ------------------------- */
+    section {
+      margin: 36px 0
+    }
+    
+    .card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.05));
+      padding: 18px;
+      border-radius: 12px;
+      box-shadow: var(--card-shadow)
+    }
+    
+    h2.section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      margin: 0 0 12px
+    }
+    
+    .muted {
+      color: rgba(230, 247, 255, 0.72);
+      font-size: 0.98rem
+    }
+    
+    /* -------------------------
+     Skills: radar chart + legend
+     ------------------------- */
+    .skills-grid {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap
+    }
+    
+    .radar-wrap {
+      flex: 1;
+      min-width: 260px;
+      max-width: 520px;
+      position: relative
+    }
+    
+    .radar-svg {
+      width: 100%;
+      height: auto;
+      display: block
+    }
+    
+    .skill-list {
+      min-width: 200px
+    }
+    
+    /* radar animation pulses */
+    @keyframes pulseGlow {
+      0% {
+        filter: drop-shadow(0 0 10px rgba(0, 238, 255, 0.06))
+      }
+      
+      50% {
+        filter: drop-shadow(0 0 20px rgba(0, 238, 255, 0.12))
+      }
+      
+      100% {
+        filter: drop-shadow(0 0 10px rgba(0, 238, 255, 0.06))
+      }
+    }
+    
+    .radar-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      animation: pulseGlow 4s ease-in-out infinite
+    }
+    
+    /* -------------------------
+     Projects gallery
+     ------------------------- */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px
+    }
+    
+    .project-tile {
+      padding: 12px;
+      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(0, 0, 0, 0.04));
+      border: 1px solid rgba(255, 255, 255, 0.02)
+    }
+    
+    .project-tile h3 {
+      margin: 0 0 6px;
+      font-size: 16px
+    }
+    
+    .project-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px
+    }
+    
+    .btn {
+      padding: 8px 12px;
+      border-radius: 13px;
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-magenta));
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      cursor: pointer
+    }
+    
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000
+    }
+    
+    .lightbox.show {
+      display: flex
+    }
+    
+    .lightbox .panel {
+      background: linear-gradient(180deg, rgba(8, 176, 255, 0.78), rgba(0, 0, 0, 0.06));
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 860px;
+      width: 92%;
+    }
+    
+    /* -------------------------
+     Timeline / learning journey
+     ------------------------- */
+    .timeline {
+      position: relative;
+      padding-left: 18px;
+      border-left: 2px dashed rgba(255, 255, 255, 0.04)
+    }
+    
+    .timeline .item {
+      position: relative;
+      margin: 12px 0;
+      padding-left: 12px
+    }
+    
+    .timeline .item::before {
+      content: "";
+      position: absolute;
+      left: -10px;
+      top: 6px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-magenta));
+      box-shadow: 0 0 12px rgba(0, 238, 255, 0.10)
+    }
+    
+    /* -------------------------
+     Contact form
+     ------------------------- */
+    form {
+      display: grid;
+      gap: 10px
+    }
+    
+    input,
+    textarea,
+    select {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: transparent;
+      color: inherit
+    }
+    
+    button.primary {
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-magenta));
+      border: none;
+      color: #001;
+      font-weight: 700;
+      cursor: pointer
+    }
+    
+    /* small screens */
+    @media (max-width:880px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+      
+      nav ul {
+        display: none;
+      }
+      
+      .hamburger {
+        display: flex;
+      }
+      
+      .mobile-drawer {
+        display: none;
+      }
+      
+      .wrap {
+        padding: 18px;
+      }
+    }
+    
+    /* subtle floating shapes animation (background) */
+    .float-shape {
+      position: fixed;
+      pointer-events: none;
+      border-radius: 50%;
+      opacity: 0.06;
+      mix-blend-mode: screen;
+      animation: floaty 12s infinite ease-in-out;
+    }
+    
+    @keyframes floaty {
+      0% {
+        transform: translateY(0) rotate(0deg)
+      }
+      
+      50% {
+        transform: translateY(-36px) rotate(45deg)
+      }
+      
+      100% {
+        transform: translateY(0) rotate(0deg)
+      }
+    }
+    
+    /* small helper */
+    .muted-cta {
+      font-size: 0.9rem;
+      color: rgba(230, 247, 255, 0.7)
+    }
+  </style>
 </head>
 
 <body>
-    <!-- Particles animation -->
-    <div id="particles"></div> <!-- Navbar -->
-    <nav class="navbar fixed top-0 w-full z-50 px-4 py-6">
-        <div class="container mx-auto flex justify-between items-center">
-            <div class="logo">Yoko</div>
-            <ul class="hidden md:flex space-x-8">
-                <li><a href="#hero" class="nav-link text-white hover:text-yellow-300 transition duration-300 cursor-pointer">Home</a></li>
-                <li><a href="#about" class="nav-link text-white hover:text-yellow-300 transition duration-300 cursor-pointer">About</a></li>
-                <li><a href="#projects" class="nav-link text-white hover:text-yellow-300 transition duration-300 cursor-pointer">Projects</a></li>
-                <li><a href="#skills" class="nav-link text-white hover:text-yellow-300 transition duration-300 cursor-pointer">Skills</a></li>
-                <li><a href="#contact" class="nav-link text-white hover:text-yellow-300 transition duration-300 cursor-pointer">Contact</a></li>
-            </ul>
-              <button class="theme-toggle text-white ml-4" onclick="toggleTheme()">
-                <i class="fas fa-moon" id="theme-icon"></i>
-            </button>
-            <div class="md:hidden">
-                <button id="mobile-menu-toggle" class="text-white">
-                    <i class="fas fa-bars text-2xl"></i>
-                </button>
-                <ul id="mobile-menu" class="hidden absolute top-full right-0 bg-black bg-opacity-90 backdrop-blur-md py-4 px-6 space-y-4 rounded-lg mt-2">
-                    <li><a href="#hero" class="nav-link text-white hover:text-yellow-300 transition duration-300 block" onclick="toggleMenu()">Home</a></li>
-                    <li><a href="#about" class="nav-link text-white hover:text-yellow-300 transition duration-300 block" onclick="toggleMenu()">About</a></li>
-                    <li><a href="#projects" class="nav-link text-white hover:text-yellow-300 transition duration-300 block" onclick="toggleMenu()">Projects</a></li>
-                    <li><a href="#skills" class="nav-link text-white hover:text-yellow-300 transition duration-300 block" onclick="toggleMenu()">Skills</a></li>
-                    <li><a href="#contact" class="nav-link text-white hover:text-yellow-300 transition duration-300 block" onclick="toggleMenu()">Contact</a></li>
-                </ul>
-            </div>
+  
+  <!-- floating background shapes (decor) -->
+  <div class="float-shape" style="width:260px;height:260px;left:8%;top:12%;background:linear-gradient(135deg,var(--neon-blue),transparent)"></div>
+  <div class="float-shape" style="width:140px;height:140px;right:6%;bottom:18%;background:linear-gradient(135deg,var(--neon-magenta),transparent);animation-duration:16s"></div>
+  
+  <!-- Fixed Navbar -->
+  <header class="fixed-nav" role="banner">
+    <div class="wrap nav-inner">
+      <div class="brand">
+        <div class="logo">YK</div>
+        <span>YOKO — dev × traveler</span>
+      </div>
+      
+      <nav aria-label="Main">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#journey">Journey</a></li>
+          <li><a href="#contact" class="cta-btn">Contact</a></li>
+        </ul>
+      </nav>
+      
+      <!-- mobile hamburger -->
+      <div class="hamburger" id="hamburger" aria-expanded="false" aria-controls="mobile-drawer" title="Menu">
+        <!-- simple hamburger icon -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+      
+      <!-- small mobile menu (will be toggled) -->
+      <div class="mobile-drawer" id="mobile-drawer" role="menu" aria-hidden="true">
+        <a href="#home" style="display:block;padding:8px 6px">Home</a>
+        <a href="#about" style="display:block;padding:8px 6px">About</a>
+        <a href="#skills" style="display:block;padding:8px 6px">Skills</a>
+        <a href="#projects" style="display:block;padding:8px 6px">Projects</a>
+        <a href="#journey" style="display:block;padding:8px 6px">Journey</a>
+        <a href="#contact" style="display:block;padding:8px 6px">Contact</a>
+      </div>
+    </div>
+  </header>
+  
+  <main>
+    <div class="wrap">
+      
+      <!-- HERO -->
+      <section id="home" class="hero">
+        <div class="hero-card">
+          <div class="halo" aria-hidden="true"></div>
+          <h1>Yoko — Neon Cyberpunk Traveler</h1>
+          <p class="muted">Beginner web developer. Building interactive vanilla JavaScript apps, travel-themed UI, and playful neon experiences. Learning AI & app packaging on an Android phone.</p>
           
+          <div class="cta">
+            <button class="cta-btn" id="view-projects">Explore Projects</button>
+            <button class="btn" id="download-guide" title="Download offline package (manually add files)">Download ZIP</button>
+          </div>
+          
+          <div style="margin-top:18px" class="muted-cta">Featured: Multi-section Quiz App · Login system demo · Offline-first portfolio</div>
         </div>
-    </nav>
-    
-    <!-- Hero Section -->
-    <section id="hero" class="hero-bg">
-        <div class="hero-content container mx-auto px-4 text-center relative z-10">
-            <div class="bounce-in">
-                <img src="Camera King Gcam20250709_110105_⏺️ iPhone Magic Color ⏺️ Lmc 8.4 R15.jpg" alt="Professional portrait of a young software engineer John Doe with a confident smile, wearing a casual blazer over a t-shirt, standing in a modern office setting with natural lighting and subtle cityscape background through a window" class="w-48 h-48 rounded-full mx-auto mb-8 border-4 border-white shadow-2xl floating" />
-                <h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-yellow-300 to-pink-500 bg-clip-text text-transparent">Yoko</h1>
-                <p class="text-xl md:text-2xl mb-8 text-white">Full-Stack Developer & UI/UX Enthusiast</p>
-                <p class="text-lg md:text-xl mb-12 max-w-3xl mx-auto text-white leading-relaxed">Passionate about creating innovative web solutions that blend functionality with stunning design. Over 5 years of experience in crafting user-centric applications with cutting-edge technologies.</p>
-                <div class="space-x-6">
-                    <button onclick="smoothScroll('#projects')" class="btn-neumorph text-lg font-semibold">View My Work</button>
-                    <button onclick="smoothScroll('#contact')" class="btn-neumorph text-lg font-semibold">Get In Touch</button>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- About Section -->
-    <section id="about" class="section glassmorphism">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl md:text-6xl font-bold text-center mb-16 text-white slide-in-left">About Me</h2>
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="slide-in-left">
-                    <p class="text-lg mb-6 leading-relaxed text-white">I am a passionate web developer with strong knowledge in front-end technologies. I enjoy creating modern, responsive, and user-friendly websites that blend functionality with design aesthetics.</p>
-                    <p class="text-lg mb-6 leading-relaxed text-white">Beyond coding, I'm an avid traveler, photographer, and mentor. I believe in lifelong learning and enjoy sharing knowledge with the developer community. When I'm not coding, you'll find me exploring new hiking trails or experimenting with new recipes in the kitchen.</p>
-                 
-                </div>
-                <div class="slide-in-right space-y-8">
-                    <div class="neumorphism p-8">
-                        <h3 class="text-2xl font-semibold mb-6 text-gray-800">My Values</h3>
-                        <ul class="space-y-4 text-gray-700">
-                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-4"></i>User-Centric Design</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-4"></i>Continuous Innovation</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-4"></i>Collaboration</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-4"></i>Ethical Coding</li>
-                        </ul>
-                    </div>
-                    <div class="neumorphism p-8">
-                        <h3 class="text-2xl font-semibold mb-6 text-gray-800">Fun Facts</h3>
-                        <p class="text-gray-700">I've contributed to over 20 open-source projects and love speaking at tech conferences. Coffee is my fuel for coding marathons, and I once hiked a 14,000-foot mountain!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Projects Section -->
-    <section id="projects" class="section">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl md:text-6xl font-bold text-center mb-16 text-white bounce-in">My Projects</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <div class="project-card slide-in-left">
-                    <img src="Screenshot_2025-09-12-20-41-31-348_io.spck.jpg" alt="Modern e-commerce website interface showing product grid with shopping cart feature and responsive mobile layout designed in pastel colors with clean typography and intuitive navigation elements" class="w-full h-48 object-cover rounded-2xl" />
-                    <div class="project-card-content rounded-b-2xl">
-                        <h3 class="text-xl font-bold mb-3 text-gray-800">E-Commerce Platform</h3>
-                        <p class="text-gray-600 mb-4 leading-relaxed">A full-stack e-commerce solution with React, Node.js, and MongoDB. Features include user auth, payment integration, and admin dashboard with real-time analytics.</p>
-                        <div class="flex justify-between items-center">
-                            <div class="flex space-x-2">
-                                <span class="bg-gradient-to-r from-blue-400 to-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">React</span>
-                                <span class="bg-gradient-to-r from-green-400 to-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold">Node.js</span>
-                            </div>
-                            <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold transition duration-300">View Demo →</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card bounce-in">
-                    <img src="Screenshot_2025-09-11-11-20-38-110_io.spck.jpg" alt="Task management application screenshot displaying kanban board with drag-and-drop features colorful task cards progress bars and team collaboration tools in a sleek minimalist design" class="w-full h-48 object-cover rounded-2xl" />
-                    <div class="project-card-content rounded-b-2xl">
-                        <h3 class="text-xl font-bold mb-3 text-gray-800">Task Manager App</h3>
-                        <p class="text-gray-600 mb-4 leading-relaxed">A collaborative task management tool built with Vue.js and Firebase. Includes real-time updates, file attachments, voice notes, and advanced filtering with smart AI suggestions.</p>
-                        <div class="flex justify-between items-center">
-                            <div class="flex space-x-2">
-                                <span class="bg-gradient-to-r from-green-400 to-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold">Vue.js</span>
-                                <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-white px-3 py-1 rounded-full text-sm font-semibold">Firebase</span>
-                            </div>
-                            <a href="#" class="text-green-600 hover:text-green-800 font-semibold transition duration-300">View Code →</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card slide-in-right">
-                    <img src="Screenshot_2025-09-12-20-38-43-980_io.spck.jpg" alt="Weather forecasting app interface with interactive map weather icons temperature charts and location-based forecasts in a vibrant blue and white color scheme optimized for all devices" class="w-full h-48 object-cover rounded-2xl" />
-                    <div class="project-card-content rounded-b-2xl">
-                        <h3 class="text-xl font-bold mb-3 text-gray-800">Weather Forecast App</h3>
-                        <p class="text-gray-600 mb-4 leading-relaxed">A responsive weather application using React Native. Integrates with multiple APIs, includes offline support, customizable widgets, and beautiful animations.</p>
-                        <div class="flex justify-between items-center">
-                            <div class="flex space-x-2">
-                                <span class="bg-gradient-to-r from-blue-400 to-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">React Native</span>
-                                <span class="bg-gradient-to-r from-purple-400 to-purple-600 text-white px-3 py-1 rounded-full text-sm font-semibold">API Integration</span>
-                            </div>
-                            <a href="#" class="text-purple-600 hover:text-purple-800 font-semibold transition duration-300">View App →</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Skills Section -->
-    <section id="skills" class="section glassmorphism">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl md:text-6xl font-bold text-center mb-16 text-white slide-in-left">My Skills</h2>
-            <div class="grid md:grid-cols-4 gap-10 text-center">
-                <div class="bounce-in" data-skill="95">
-                    <div class="neumorphism p-8 mx-auto w-full mb-6">
-                        <i class="fas fa-code text-6xl text-blue-500 mb-6 skill-icon"></i>
-                        <h3 class="text-xl font-bold mb-4 text-gray-800">JavaScript</h3>
-                        <div class="bg-gray-200 rounded-full h-2 mb-4 overflow-hidden">
-                            <div class="skill-bar"></div>
-                        </div>
-                        <p class="text-gray-700 text-sm">ES6+, Async/Await, Promises</p>
-                    </div>
-                </div>
-                <div class="bounce-in" data-skill="90">
-                    <div class="neumorphism p-8 mx-auto w-full mb-6">
-                        <i class="fab fa-react text-6xl text-blue-500 mb-6 skill-icon"></i>
-                        <h3 class="text-xl font-bold mb-4 text-gray-800">React</h3>
-                        <div class="bg-gray-200 rounded-full h-2 mb-4 overflow-hidden">
-                            <div class="skill-bar"></div>
-                        </div>
-                        <p class="text-gray-700 text-sm">Hooks, Context, Redux</p>
-                    </div>
-                </div>
-                <div class="slide-in-right" data-skill="85">
-                    <div class="neumorphism p-8 mx-auto w-full mb-6">
-                        <i class="fab fa-node-js text-6xl text-green-500 mb-6 skill-icon"></i>
-                        <h3 class="text-xl font-bold mb-4 text-gray-800">Node.js</h3>
-                        <div class="bg-gray-200 rounded-full h-2 mb-4 overflow-hidden">
-                            <div class="skill-bar"></div>
-                        </div>
-                        <p class="text-gray-700 text-sm">Express, API, Authentication</p>
-                    </div>
-                </div>
-                <div class="slide-in-left" data-skill="80">
-                    <div class="neumorphism p-8 mx-auto w-full mb-6">
-                        <i class="fas fa-database text-6xl text-yellow-500 mb-6 skill-icon"></i>
-                        <h3 class="text-xl font-bold mb-4 text-gray-800">Databases</h3>
-                        <div class="bg-gray-200 rounded-full h-2 mb-4 overflow-hidden">
-                            <div class="skill-bar"></div>
-                        </div>
-                        <p class="text-gray-700 text-sm">MongoDB, PostgreSQL, Firebase</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Contact Section -->
-    <section id="contact" class="section">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl md:text-6xl font-bold text-center mb-16 text-white bounce-in">Get In Touch</h2>
-            <div class="grid md:grid-cols-2 gap-12">
-                <div class="slide-in-left">
-                    <p class="text-lg mb-8 leading-relaxed text-white">I'm always interested in new opportunities and collaborations. Whether you have a project in mind or just want to chat about technology, I'd love to hear from you! Let's create something amazing together.</p>
-                    <div class="space-y-6 mb-8">
-                        <div class="flex items-center floating">
-                            <i class="fas fa-envelope text-blue-400 mr-4 text-2xl"></i>
-                            <span class="text-white text-lg">yoko80415@gmail.com</span>
-                        </div>
-                        <div class="flex items-center floating">
-                            <i class="fas fa-phone text-blue-400 mr-4 text-2xl"></i>
-                            <span class="text-white text-lg">+959794038065</span>
-                        </div>
-                        <div class="flex items-center floating">
-                            <i class="fas fa-map-marker-alt text-blue-400 mr-4 text-2xl"></i>
-                            <span class="text-white text-lg">Myanmar, Yangon</span>
-                        </div>
-                    </div>
-                    <div class="flex space-x-6">
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-linkedin-in text-3xl text-blue-400"></i>
-                        </a>
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-github text-3xl text-gray-300"></i>
-                        </a>
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-twitter text-3xl text-blue-300"></i>
-                        </a>
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-dribbble text-3xl text-pink-400"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="slide-in-right">
-                    <form class="contact-form">
-                        <div class="mb-6">
-                            <label for="name" class="block text-gray-700 mb-2 font-semibold">Name</label>
-                            <input type="text" id="name" name="name" class="w-full placeholder-gray-400" placeholder="Your Full Name" required>
-                        </div>
-                        <div class="mb-6">
-                            <label for="email" class="block text-gray-700 mb-2 font-semibold">Email</label>
-                            <input type="email" id="email" name="email" class="w-full placeholder-gray-400" placeholder="your.email@example.com" required>
-                        </div>
-                        <div class="mb-6">
-                            <label for="message" class="block text-gray-700 mb-2 font-semibold">Message</label>
-                            <textarea id="message" name="message" rows="6" class="w-full placeholder-gray-400" placeholder="Tell me about your project..." required></textarea>
-                        </div>
-                        <button type="submit" class="btn-neumorph w-full py-3 text-lg font-semibold text-gray-800">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Footer -->
-    <footer class="glassmorphism py-12 mt-20">
-        <div class="container mx-auto px-4 text-center text-white">
-            <p class="text-lg">© 2025 Yoko. All rights reserved.</p>
-            <p class="mt-4 text-sm opacity-70">Designed with ♥ using modern web technologies</p>
-        </div>
-    </footer>
-    
-    <script>
-        // Smooth scrolling function  
-        function smoothScroll(target) {
-            const element = document.querySelector(target);
-            const navbarHeight = 100; // Adjust for fixed navbar  
-            const offsetTop = element.offsetTop - navbarHeight;
-            window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-            });
-        }
         
-        // Mobile menu toggle  
-        function toggleMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
-        
-        // Theme toggle  
-        let isDarkMode = false;
-        
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            const icon = document.getElementById('theme-icon');
-            isDarkMode = !isDarkMode;
-            if (isDarkMode) {
-                icon.className = 'fas fa-sun';
-            } else {
-                icon.className = 'fas fa-moon';
-            }
-        }
-        
-        // Intersection Observer for animations  
-        const observerOptions = {
-            threshold: 1,
-            rootMargin: '-100px'
-        };
-        
-        const observerCallback = (entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animationPlayState = 'running';
-                }
-            });
-        };
-        
-        const observer = new IntersectionObserver(observerCallback, observerOptions);
-        document.querySelectorAll('.slide-in-left, .slide-in-right, .bounce-in, .floating').forEach(el => {
-            observer.observe(el);
-        });
-        // nav bar
-        
-        // Particles animation  
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + 'vw';
-            particle.style.animationDuration = (Math.random() * 5 + 5) + 's';
-            particle.style.animationDelay = Math.random() * 5 + 's';
-            document.getElementById('particles').appendChild(particle);
+        <aside class="profile-preview">
+          <div class="avatar" aria-hidden="true"></div>
+          <div style="font-weight:700">Yoko</div>
+          <div style="font-size:13px;color:rgba(230,247,255,0.82)">Android-first developer • Sketchware user • Learner of AI</div>
+        </aside>
+      </section>
+      
+      <!-- ABOUT -->
+      <section id="about" class="card">
+        <h2 class="section-title">About Me</h2>
+        <p class="muted">Hi — I'm Yoko. I build small, focused web apps using only HTML, CSS, and JavaScript. I prefer working offline on my phone. My recent projects include a multi-section quiz web app, a JS-object-based login system, and experimenting with packaging web apps into APKs using Sketchware.</p>
+        <p class="muted" style="margin-top:10px">I love travel visuals, neon aesthetics, and small interactive micro-UIs that teach and delight users.</p>
+      </section>
+      
+      <!-- SKILLS -->
+      <section id="skills" class="card">
+        <h2 class="section-title">Skills</h2>
+        <div class="skills-grid">
+          <!-- radar chart -->
+          <div class="radar-wrap card" aria-hidden="false">
+            <!-- Inline SVG radar. JS will update polygon points to animate changes -->
+            <svg viewBox="0 0 300 300" class="radar-svg" id="radarSVG" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Skill radar chart">
+              <!-- grid background rings -->
+              <defs>
+                <radialGradient id="g1">
+                  <stop offset="0%" stop-color="rgba(0,238,255,0.06)"></stop>
+                  <stop offset="100%" stop-color="transparent"></stop>
+                </radialGradient>
+              </defs>
+              
+              <g transform="translate(150,150)">
+                <!-- 5 rings -->
+                <g id="rings">
+                  <circle cx="0" cy="0" r="120" fill="none" stroke="rgba(255,255,255,0.03)" />
+                  <circle cx="0" cy="0" r="90" fill="none" stroke="rgba(255,255,255,0.02)" />
+                  <circle cx="0" cy="0" r="60" fill="none" stroke="rgba(255,255,255,0.015)" />
+                  <circle cx="0" cy="0" r="30" fill="none" stroke="rgba(255,255,255,0.01)" />
+                </g>
+                
+                <!-- axes -->
+                <g id="axes"></g>
+                
+                <!-- dynamic polygon region (skill area) -->
+                <polygon id="skillArea" points="" style="fill:rgba(0,238,255,0.08);stroke:rgba(0,238,255,0.6);stroke-width:2;filter:drop-shadow(0 6px 18px rgba(0,238,255,0.06));transition:all 0.6s ease"></polygon>
+                
+                <!-- points (for hover/touch) -->
+                <g id="skillPoints"></g>
+                
+                <!-- labels are placed via JS -->
+                <g id="labels" font-family="Arial" font-size="12" fill="#e6f7ff" opacity="0.95"></g>
+              </g>
+            </svg>
             
-            setTimeout(() => {
-                particle.remove();
-            }, 10000);
+            <div class="radar-overlay" style="pointer-events:none"></div>
+            <div style="margin-top:12px;font-size:13px">Interactive: drag slider to adjust skill values.</div>
+            
+            <!-- sliders to change the skills (mobile friendly) -->
+            <div id="skillControls" style="margin-top:10px;display:grid;gap:8px"></div>
+          </div>
+          
+          <!-- legend & list -->
+          <div class="skill-list">
+            <h3 style="margin-top:0">Skill legend</h3>
+            <p class="muted">This radar shows core focus areas. Adjust sliders to animate the chart and practice DOM/JS animation.</p>
+            <ul style="margin-top:10px">
+              <li>HTML & CSS — structure & styling</li>
+              <li>JavaScript — DOM, events, storage</li>
+              <li>UI Design — neon effects & animations</li>
+              <li>Packaging — Sketchware & APK basics</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      
+      <!-- PROJECTS -->
+      <section id="projects" class="card">
+        <h2 class="section-title">Projects</h2>
+        <p class="muted">Small projects you can explore directly on your phone.</p>
+        
+        <div style="margin-top:12px" class="projects-grid" id="projectsGrid">
+          <!-- each tile created by JS for clarity -->
+        </div>
+      </section>
+      
+      <!-- LIGHTBOX -->
+      <div class="lightbox" id="lightbox" aria-hidden="true">
+        <div class="panel" role="dialog" aria-modal="true" id="lightboxPanel">
+          <button class="btn" id="closeLightbox" style="float:right">Close</button>
+          <div id="lightboxContent">Loading…</div>
+        </div>
+      </div>
+      
+      <!-- JOURNEY -->
+      <section id="journey" class="card">
+        <h2 class="section-title">Learning Journey</h2>
+        <div class="timeline">
+          <div class="item"><strong>2025-06</strong> — Started building quiz app; learned timers and state</div>
+          <div class="item"><strong>2025-07</strong> — Built login system with JS object storage</div>
+          <div class="item"><strong>2025-08</strong> — Practiced packaging with Sketchware</div>
+          <div class="item"><strong>Next</strong> — Explore AI model demos & reusable UI components</div>
+        </div>
+      </section>
+      
+      <!-- CONTACT -->
+      <section id="contact" class="card">
+        <h2 class="section-title">Contact</h2>
+        <p class="muted">Send a quick message. Submissions are stored in a JavaScript object (offline).</p>
+        
+        <form id="contactForm" onsubmit="return false">
+          <input type="text" id="name" placeholder="Your name" required />
+          <input type="email" id="email" placeholder="Email (optional)" />
+          <input type="text" id="subject" placeholder="Subject" />
+          <textarea id="message" placeholder="Write your message..." rows="4"></textarea>
+          <div style="display:flex;gap:10px;align-items:center">
+            <button class="primary" id="submitContact">Send message</button>
+            <div id="contactFeedback" class="muted" aria-live="polite"></div>
+          </div>
+        </form>
+        
+        <div style="margin-top:12px" class="muted">Stored submissions (in-memory): <code id="submissionCount">0</code></div>
+      </section>
+      
+    </div>
+  </main>
+  
+  <!-- Inline JavaScript (well-commented) -->
+  <script>
+    /* ============================
+   App: Yoko Offline Portfolio
+   All logic is vanilla JS and stores data
+   locally in-memory (optionally uses localStorage).
+   ============================ */
+    
+    (() => {
+      /* --------------------------
+         Simple helpers & initial state
+         -------------------------- */
+      const el = (sel) => document.querySelector(sel);
+      const els = (sel) => Array.from(document.querySelectorAll(sel));
+      
+      // Contact storage: all submissions stored here as array of objects.
+      // Each submission: {id, name, email, subject, message, date}
+      const contactSubmissions = [];
+      
+      // Example projects to show in the gallery (replace with your own).
+      const projects = [
+      {
+        id: 'p1',
+        title: 'Multi-section Quiz App',
+        short: 'Timed quizzes, animated blocks, results summary.',
+        details: 'A multi-section quiz web app with timers, animated question blocks, and result calculation. Built with HTML/CSS/JS.',
+        code: 'Vanilla JS; uses a local object to store user answers.'
+      },
+      {
+        id: 'p2',
+        title: 'Login System (JS Object)',
+        short: 'Login form storing users in a JS object for demo purposes.',
+        details: 'A small demo showing registration and login using a JavaScript object as storage (in-memory). Good for practicing state handling.',
+        code: 'No backend; purely client-side.'
+      },
+      {
+        id: 'p3',
+        title: 'Offline Portfolio (this page)',
+        short: 'Single-file portfolio designed for offline use.',
+        details: 'This exact portfolio page — offline-first, responsive, and made for mobile (Android).',
+        code: 'HTML + CSS + JavaScript contained in one file.'
+      }];
+      
+      
+      /* --------------------------
+         NAV: mobile hamburger toggle
+         -------------------------- */
+      const hamburger = el('#hamburger');
+      const mobileDrawer = el('#mobile-drawer');
+      hamburger.addEventListener('click', () => {
+        const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+        hamburger.setAttribute('aria-expanded', String(!expanded));
+        mobileDrawer.setAttribute('aria-hidden', String(expanded));
+        // simple animation: toggle visibility by changing transform or display
+        mobileDrawer.style.display = expanded ? 'none' : 'block';
+      });
+      
+      // Smooth scroll for top nav links (works offline)
+      document.addEventListener('click', (e) => {
+        if (e.target.matches('a[href^="#"]')) {
+          const href = e.target.getAttribute('href');
+          if (href && href.startsWith('#')) {
+            const dest = document.querySelector(href);
+            if (dest) {
+              e.preventDefault();
+              dest.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              // close mobile drawer if open
+              if (mobileDrawer && mobileDrawer.style.display === 'block') {
+                mobileDrawer.style.display = 'none';
+                hamburger.setAttribute('aria-expanded', 'false');
+                mobileDrawer.setAttribute('aria-hidden', 'true');
+              }
+            }
+          }
+        }
+      });
+      
+      /* --------------------------
+         PROJECTS GRID: render tiles & lightbox
+         -------------------------- */
+      const projectsGrid = el('#projectsGrid');
+      const lightbox = el('#lightbox');
+      const lightboxContent = el('#lightboxContent');
+      const closeLightbox = el('#closeLightbox');
+      
+      function renderProjects() {
+        projectsGrid.innerHTML = '';
+        projects.forEach(p => {
+          const tile = document.createElement('div');
+          tile.className = 'project-tile';
+          tile.innerHTML = `
+        <h3>${escapeHTML(p.title)}</h3>
+        <p style="margin:0;font-size:13px">${escapeHTML(p.short)}</p>
+        <div class="project-actions">
+          <button class="btn" data-id="${p.id}" data-action="view">View</button>
+          <button class="btn" data-id="${p.id}" data-action="code">Code</button>
+        </div>
+      `;
+          projectsGrid.appendChild(tile);
+        });
+      }
+      
+      // clicking project buttons
+      projectsGrid.addEventListener('click', (ev) => {
+        const btn = ev.target.closest('button');
+        if (!btn) return;
+        const id = btn.dataset.id;
+        const action = btn.dataset.action;
+        const proj = projects.find(x => x.id === id);
+        if (!proj) return;
+        
+        if (action === 'view') {
+          showLightbox(`<h3>${escapeHTML(proj.title)}</h3><p>${escapeHTML(proj.details)}</p>`);
+        } else if (action === 'code') {
+          showLightbox(`<h3>${escapeHTML(proj.title)} — Code notes</h3><pre style="white-space:pre-wrap">${escapeHTML(proj.code)}</pre>`);
+        }
+      });
+      
+      function showLightbox(html) {
+        lightboxContent.innerHTML = html;
+        lightbox.classList.add('show');
+        lightbox.setAttribute('aria-hidden', 'false');
+      }
+      closeLightbox.addEventListener('click', () => {
+        lightbox.classList.remove('show');
+        lightbox.setAttribute('aria-hidden', 'true');
+      });
+      // click outside panel to close
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+          lightbox.classList.remove('show');
+          lightbox.setAttribute('aria-hidden', 'true');
+        }
+      });
+      
+      renderProjects();
+      
+      
+      /* --------------------------
+         CONTACT FORM: store submissions in a JS object
+         - Submissions are pushed to contactSubmissions array.
+         - Optionally persist to localStorage (uncomment to enable).
+         -------------------------- */
+      const contactForm = el('#contactForm');
+      const submitContact = el('#submitContact');
+      const contactFeedback = el('#contactFeedback');
+      const submissionCount = el('#submissionCount');
+      
+      submitContact.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        const name = (el('#name').value || '').trim();
+        const email = (el('#email').value || '').trim();
+        const subject = (el('#subject').value || '').trim();
+        const message = (el('#message').value || '').trim();
+        
+        if (!name && !message) {
+          contactFeedback.textContent = 'Please provide at least your name or a message.';
+          return;
         }
         
-        setInterval(createParticle, 300);
+        const id = 's' + Date.now();
+        const entry = { id, name, email, subject, message, date: new Date().toISOString() };
+        contactSubmissions.push(entry);
         
-        // Contact form handling  
-        document.querySelector('.contact-form').addEventListener('submit', e => {
-            e.preventDefault();
-            // Simulate form submission  
-            const btn = e.target.querySelector('button');
-            const originalText = btn.textContent;
-            btn.textContent = 'Sending...';
-            setTimeout(() => {
-                alert('Thank you for your message! I\'ll get back to you soon.');
-                btn.textContent = originalText;
-                e.target.reset();
-            }, 2000);
+        // If you'd like to persist across reloads, uncomment this localStorage line:
+         localStorage.setItem('yoko_contacts', JSON.stringify(contactSubmissions));
+        
+        contactFeedback.textContent = 'Message stored locally — thank you!';
+        submissionCount.textContent = contactSubmissions.length;
+        
+        // clear form fields gently
+        el('#name').value = '';
+        el('#email').value = '';
+        el('#subject').value = '';
+        el('#message').value = '';
+        
+        // for debugging on device: console.log the stored object (visible if using remote debugger)
+        console.log('Contact saved:', entry);
+      });
+      
+     //  If using localStorage persistence: load at start (optional)
+     //  (commented out for pure in-memory behavior)
+   //    (function loadSaved(){
+      //  const saved = localStorage.getItem('yoko_contacts');
+       // if (saved) {
+         // try{ const arr = JSON.parse(saved); contactSubmissions.push(...arr); submissionCount.textContent = contactSubmissions.length; } catch(e){}
+      //   }
+    //   })();
+      
+      
+      
+      /* --------------------------
+         RADAR: dynamic skill radar chart (SVG + JS)
+         - The radar is drawn in an SVG at center (150,150).
+         - JS calculates polygon points based on skill values (0..100).
+         - There are sliders to change skill values; polygon animates between values.
+         -------------------------- */
+      
+      const radarSVG = el('#radarSVG');
+      const labelsGroup = el('#labels');
+      const axesGroup = el('#axes');
+      const skillArea = el('#skillArea');
+      const skillPoints = el('#skillPoints');
+      const skillControls = el('#skillControls');
+      
+      // initial skill values (0-100)
+      const skills = [
+        { key: 'html', label: 'HTML/CSS', value: 85 },
+        { key: 'js', label: 'JavaScript', value: 72 },
+        { key: 'ui', label: 'UI Design', value: 68 },
+        { key: 'pack', label: 'Packaging', value: 60 },
+        { key: 'ai', label: 'AI basics', value: 46 }
+      ];
+      
+      // draw axes and labels (static)
+      function buildRadarBase() {
+        axesGroup.innerHTML = '';
+        labelsGroup.innerHTML = '';
+        const cx = 0,
+          cy = 0,
+          maxR = 120,
+          step = (2 * Math.PI) / skills.length;
+        skills.forEach((s, i) => {
+          const angle = -Math.PI / 2 + i * step; // start at top
+          const x = Math.cos(angle) * maxR;
+          const y = Math.sin(angle) * maxR;
+          // axis line
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', cx);
+          line.setAttribute('y1', cy);
+          line.setAttribute('x2', x);
+          line.setAttribute('y2', y);
+          line.setAttribute('stroke', 'rgba(255,255,255,0.02)');
+          axesGroup.appendChild(line);
+          // label
+          const lx = Math.cos(angle) * (maxR + 18);
+          const ly = Math.sin(angle) * (maxR + 18);
+          const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          t.setAttribute('x', String(lx));
+          t.setAttribute('y', String(ly + 4));
+          t.setAttribute('text-anchor', 'middle');
+          t.textContent = s.label;
+          labelsGroup.appendChild(t);
         });
-        
-        // Skill bars animation  
-        const skillObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const skillBars = entry.target.querySelectorAll('.skill-bar');
-                    skillBars.forEach(bar => {
-                        const skillLevel = entry.target.getAttribute('data-skill');
-                        bar.style.width = skillLevel + '%';
-                    });
-                    skillObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-        
-        document.querySelectorAll('[data-skill]').forEach(skillItem => {
-            skillObserver.observe(skillItem);
+      }
+      
+      // compute points from skill values array
+      function computePoints(values) {
+        // values: array of numbers 0..100
+        const maxR = 120;
+        const cx = 0,
+          cy = 0;
+        const step = (2 * Math.PI) / values.length;
+        return values.map((v, i) => {
+          const angle = -Math.PI / 2 + i * step;
+          const r = (v / 100) * maxR;
+          const x = Math.cos(angle) * r;
+          const y = Math.sin(angle) * r;
+          return { x, y };
         });
-        
-        // Scroll-triggered navbar change  
-        window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 100) {
-                navbar.style.boxShadow = '0 5px 20px rgba(0,0,0,0.3)';
-                navbar.style.backdropFilter = 'blur(20px)';
-            } else {
-                navbar.style.boxShadow = 'none';
-                navbar.style.backdropFilter = 'blur(15px)';
-            }
+      }
+      
+      // convert points to "x,y x,y ..." string for polygon
+      function ptsToString(pts) {
+        return pts.map(p => `${p.x.toFixed(2)},${p.y.toFixed(2)}`).join(' ');
+      }
+      
+      // render skill area & points
+      function renderSkillArea() {
+        const values = skills.map(s => s.value);
+        const pts = computePoints(values);
+        skillArea.setAttribute('points', ptsToString(pts));
+        // clear points group and re-add clickable circles
+        skillPoints.innerHTML = '';
+        pts.forEach((p, idx) => {
+          const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          c.setAttribute('cx', String(p.x));
+          c.setAttribute('cy', String(p.y));
+          c.setAttribute('r', '6');
+          c.setAttribute('fill', 'rgba(0,238,255,0.9)');
+          c.setAttribute('data-idx', String(idx));
+          c.style.cursor = 'pointer';
+          skillPoints.appendChild(c);
         });
-    </script>
-    
+      }
+      
+      // create slider controls to change skill values (mobile-friendly)
+      function buildSkillControls() {
+        skillControls.innerHTML = '';
+        skills.forEach((s, idx) => {
+          const wrapper = document.createElement('div');
+          wrapper.style.display = 'flex';
+          wrapper.style.alignItems = 'center';
+          wrapper.style.gap = '8px';
+          
+          const label = document.createElement('div');
+          label.style.width = '86px';
+          label.textContent = s.label;
+          
+          const input = document.createElement('input');
+          input.type = 'range';
+          input.min = 0;
+          input.max = 100;
+          input.value = s.value;
+          input.dataset.idx = idx;
+          input.style.flex = '1';
+          
+          const val = document.createElement('div');
+          val.style.width = '36px';
+          val.style.textAlign = 'right';
+          val.textContent = s.value;
+          
+          // adjust updates
+          input.addEventListener('input', (e) => {
+            const i = Number(e.target.dataset.idx);
+            const v = Number(e.target.value);
+            skills[i].value = v;
+            val.textContent = v;
+            // animate update - polygon points will transition via SVG attribute change + CSS transition
+            renderSkillArea();
+          });
+          
+          wrapper.appendChild(label);
+          wrapper.appendChild(input);
+          wrapper.appendChild(val);
+          skillControls.appendChild(wrapper);
+        });
+      }
+      
+      buildRadarBase();
+      buildSkillControls();
+      renderSkillArea();
+      
+      
+      /* --------------------------
+         small helper: escape HTML for injection
+         -------------------------- */
+      function escapeHTML(str) {
+        return String(str).replace(/[&<>"']/g, function(m) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]; });
+      }
+      
+      /* --------------------------
+         UI: wire hero buttons
+         -------------------------- */
+      el('#view-projects').addEventListener('click', () => {
+        document.querySelector('#projects').scrollIntoView({ behavior: 'smooth' });
+      });
+      
+      // "Download ZIP" does not create a zip (offline environment).
+      el('#download-guide').addEventListener('click', () => {
+        // Display an informative note (offline-friendly instructions)
+        showLightbox(`<h3>Offline packaging</h3><p>To make this portfolio available offline on your phone, save this HTML file and any local images into the same folder. You can open the HTML in your mobile browser or load it into Sketchware's WebView to wrap as an APK.</p>`);
+      });
+      
+      /* --------------------------
+         Accessibility: keyboard close
+         -------------------------- */
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (lightbox.classList.contains('show')) {
+            lightbox.classList.remove('show');
+            lightbox.setAttribute('aria-hidden', 'true');
+          }
+        }
+      });
+      
+      /* END APP IIFE */
+    })();
+  </script>
+  
 </body>
 
-</html>
-</content>
-</create_file>
+                    </html>
