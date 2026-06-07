@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PJ Digi World | Tech, Creativity & Digital Innovation</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons for aesthetic icons -->
+    <script src="/tailwindscss.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="/bootstrip.css">
+    <script src="/bootstrip.js"></script>
+    <style>
+        /* Define custom CSS variables for neon colors */
+        :root {
+            --dark-bg: #0f0f10;
+            --neon-cyan: #00ffff;
+            --neon-purple: #a855f7;
+            --header-height: 80px;
+        }
+        
+        /* Custom Tailwind Configuration */
+        tailwind.config= {
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-bg': 'var(--dark-bg)',
+                            'neon-cyan': 'var(--neon-cyan)',
+                            'neon-purple': 'var(--neon-purple)',
+                    }
+                    
+                    ,
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                    
+                    ,
+                    boxShadow: {
+                        'neon-sm': '0 0 5px var(--neon-cyan), 0 0 10px rgba(168, 85, 247, 0.5)',
+                            'neon-lg': '0 0 15px var(--neon-cyan), 0 0 30px var(--neon-purple)',
+                    }
+                }
+            }
+        }
+        
+        /* Custom Styles for Neon Glow, Glassmorphism, and Animations */
+        
+        /* Base Body Style */
+        body {
+            background-color: var(--dark-bg);
+            color: #e0e0e0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Neon Text Effect */
+        .neon-text {
+            text-shadow: 0 0 5px var(--neon-cyan), 0 0 10px var(--neon-purple);
+        }
+        
+        /* Glassmorphism Effect for Navbar and Cards */
+        .glass-nav {
+            background: rgba(15, 15, 16, 0.3);
+            /* Darker background with transparency */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+        }
+        
+        .glass-card {
+            background: rgba(15, 15, 16, 0.5);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 255, 255, 0.2), 0 0 30px rgba(168, 85, 247, 0.1);
+        }
+        
+        /* Glitch Effect for Logo/Title */
+        @keyframes glitch {
+            0% {
+                transform: translate(0);
+            }
+            
+            20% {
+                transform: translate(-2px, 2px);
+            }
+            
+            40% {
+                transform: translate(-2px, -2px);
+            }
+            
+            60% {
+                transform: translate(2px, 2px);
+            }
+            
+            80% {
+                transform: translate(2px, -2px);
+            }
+            
+            100% {
+                transform: translate(0);
+            }
+        }
+        
+        .glitch-text:hover {
+            animation: glitch 0.2s infinite alternate;
+        }
+        
+        /* Skill Progress Bar Animation */
+        .progress-bar {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-cyan));
+            border-radius: 9999px;
+            transition: width 1.5s ease-out;
+            box-shadow: 0 0 5px var(--neon-cyan);
+            width: 0%;
+            /* Initial state for animation */
+        }
+        
+        /* Particle Canvas */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.2;
+        }
+        
+        /* Scroll Reveal Animation (Default hidden state) */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .sectionclass{
+            background-color: #1B226852;
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased text-gray-200">
+    
+    <!-- Floating Particle Background -->
+    <canvas id="particle-canvas"></canvas>
+    
+    <!-- Header / Navbar (Glassmorphism) -->
+    <header id="navbar" class="glass-nav fixed top-0 left-0 w-full z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#hero" class="text-2xl font-bold glitch-text transition duration-300 ease-in-out text-white neon-text">
+                PJ Digi <span class="text-neon-cyan">World</span>
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex space-x-8">
+                <a href="#about" class="nav-link text-gray-300 hover:text-neon-cyan relative group transition duration-300 py-2">
+                    About
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-neon-cyan transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                </a>
+                <a href="#skills" class="nav-link text-gray-300 hover:text-neon-cyan relative group transition duration-300 py-2">
+                    Skills
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-neon-cyan transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                </a>
+                <a href="#projects" class="nav-link text-gray-300 hover:text-neon-cyan relative group transition duration-300 py-2">
+                    Projects
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-neon-cyan transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                </a>
+                <a href="#contact" class="nav-link text-gray-300 hover:text-neon-cyan relative group transition duration-300 py-2">
+                    Contact
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-neon-cyan transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                </a>
+            </nav>
+            
+            <!-- Mode Toggle & Mobile Menu Button -->
+            <div class="flex items-center space-x-4">
+                <button id="mode-toggle" class="p-2 rounded-full hover:bg-white/10 transition duration-300 shadow-neon-sm">
+                    <svg class="h-5 w-5 text-neon-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                </button>
+                <button id="mobile-menu-button" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition duration-300">
+                    <svg class="h-6 w-6 text-neon-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Mobile Menu (Hidden by default) -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-dark-bg/95 backdrop-blur-sm hidden md:hidden pt-24 transition-transform duration-300">
+        <nav class="flex flex-col items-center space-y-6 text-2xl font-semibold">
+            <a href="#about" class="mobile-nav-link hover:text-neon-cyan transition duration-200">About</a>
+            <a href="#skills" class="mobile-nav-link hover:text-neon-cyan transition duration-200">Skills</a>
+            <a href="#projects" class="mobile-nav-link hover:text-neon-cyan transition duration-200">Projects</a>
+            <a href="#contact" class="mobile-nav-link hover:text-neon-cyan transition duration-200">Contact</a>
+        </nav>
+    </div>
+    
+    <main class="pt-20">
+        
+        <!-- 1. Hero Section -->
+        <section id="hero" class="min-h-screen flex items-center justify-center text-center relative overflow-hidden px-4" data-parallax-speed="0.5">
+            <div class="relative z-10 space-y-6 max-w-4xl pt-16">
+                <!-- Animated Logo/Photo placeholder -->
+                <div class="mx-auto w-36 h-36 border-4 border-neon-cyan/50 rounded-full overflow-hidden p-1 shadow-neon-lg animate-pulse" style="animation-duration: 4s;">
+                    <img src="/774258e6-2848-450a-ac0e-43e47c0cacbb.jpg" alt="PJ Digi World Profile" class="w-full h-full object-cover rounded-full">
+                </div>
+                
+                <h1 class="text-5xl sm:text-7xl font-extrabold text-white leading-tight">
+                    <span class="glitch-text inline-block hover:scale-[1.01] transition-transform duration-200">
+                        <span class="text-neon-purple">PJ</span> <span class="neon-text">Digi World</span>
+                    </span>
+                </h1>
+                
+                <p class="text-xl sm:text-2xl font-light tracking-wider uppercase text-gray-400 neon-text">
+                    Tech, Creativity & Digital Innovation
+                </p>
+                
+                <div class="pt-8">
+                    <a href="#projects" class="inline-flex items-center justify-center px-8 py-3 text-lg font-medium rounded-full text-white uppercase tracking-wider transition-all duration-300 bg-neon-purple hover:bg-neon-cyan hover:shadow-neon-lg glass-card" style="box-shadow: 0 0 10px var(--neon-purple);">
+                        Explore the Grid
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                            <polyline points="16 18 22 12 16 6"></polyline>
+                            <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <div class="h-px bg-gradient-to-r from-transparent via-neon-cyan/50 to-transparent my-12"></div>
+        
+        <!-- 2. About Me Section -->
+        <section id="about" class="py-20 px-4 sectionclass max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center uppercase neon-text scroll-reveal">About the Journey</h2>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                
+                <!-- Text Content -->
+                <div class="space-y-6 scroll-reveal">
+                    <p class="text-lg leading-relaxed text-gray-300">
+                        My digital journey began with the fundamental building blocks: <strong class="text-neon-cyan">JavaScript, HTML, and CSS</strong>. I started by tackling small frontend projects, focusing on responsive design and user experience. This foundation quickly grew into an ambition to master the entire stack.
+                    </p>
+                    <p class="text-lg leading-relaxed text-gray-300">
+                        I soon expanded into <strong class="text-neon-purple">full-stack development</strong>, integrating server logic and databases. The next frontier was leveraging emerging technologies—I dedicated time to exploring <strong class="text-neon-cyan">AI tools, automation scripts, and LLM APIs</strong> to streamline processes and create dynamic, smart applications.
+                    </p>
+                    <p class="text-lg leading-relaxed text-gray-300">
+                        Today, PJ Digi World is a convergence of these skills: not just coding, but building cohesive digital presences, from <strong class="text-neon-purple">creative branding and bespoke logos</strong> (often AI-assisted) to developing viable digital business models and automated systems.
+                    </p>
+                </div>
+                
+                <!-- Animated Skill Icons (Simplified) -->
+                <div class="grid grid-cols-3 gap-6 scroll-reveal delay-200">
+                    <div class="glass-card p-6 text-center rounded-xl shadow-neon-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-3 text-neon-cyan animate-pulse">
+                            <path d="M20.2 12c.7-3.4-.6-6.3-3-8-2.6 1.7-5.5.4-7.4-2l-2 2a1.4 1.4 0 0 1-2.2-.2L3 3l1 1c-2.3 2.3-3.1 5.2-1.8 8h1m16-1h1c-1.3 2.8-.5 5.7-1.8 8l-1-1a1.4 1.4 0 0 1-2.2-.2L8.2 20.4c1.9 2.4 4.8 3.7 7.4 2 2.4-1.7 3.7-4.6 3-8z"></path>
+                        </svg>
+                        <p class="text-sm font-semibold text-white">Frontend</p>
+                    </div>
+                    <div class="glass-card p-6 text-center rounded-xl shadow-neon-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-3 text-neon-purple animate-pulse">
+                            <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+                            <path d="M7 11v-4h4"></path>
+                            <path d="M17 11v-4h-4"></path>
+                            <path d="M17 17v-4h-4"></path>
+                            <path d="M7 17v-4h4"></path>
+                        </svg>
+                        <p class="text-sm font-semibold text-white">Full-stack</p>
+                    </div>
+                    <div class="glass-card p-6 text-center rounded-xl shadow-neon-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-3 text-neon-cyan animate-pulse">
+                            <path d="M12 2a10 10 0 1 0 10 10 10 10 0 0 0-10-10z"></path>
+                            <path d="M15 9.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"></path>
+                            <path d="M10 14.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"></path>
+                            <path d="M15 14.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"></path>
+                            <path d="M10 9.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"></path>
+                        </svg>
+                        <p class="text-sm font-semibold text-white">AI/ML</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="h-px bg-gradient-to-r from-transparent via-neon-cyan/50 to-transparent my-12"></div>
+        
+        <!-- 3. Skills Progress Section -->
+        <section id="skills" class="py-20 px-4 max-w-4xl mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center uppercase neon-text scroll-reveal">Skills Progress</h2>
+            
+            <div class="space-y-8">
+                <!-- Skill Item -->
+                <div class="scroll-reveal">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-lg font-medium text-neon-cyan">Frontend Development</span>
+                        <span class="text-lg font-bold text-white skill-percentage" data-progress="60">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="skill-frontend" data-width="60%"></div>
+                    </div>
+                </div>
+                
+                <!-- Skill Item -->
+                <div class="scroll-reveal delay-100">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-lg font-medium text-neon-purple">Backend & Full-stack</span>
+                        <span class="text-lg font-bold text-white skill-percentage" data-progress="20">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="skill-backend" data-width="20%"></div>
+                    </div>
+                </div>
+                
+                <!-- Skill Item -->
+                <div class="scroll-reveal delay-200">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-lg font-medium text-neon-cyan">AI & Automation</span>
+                        <span class="text-lg font-bold text-white skill-percentage" data-progress="25">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="skill-ai" data-width="25%"></div>
+                    </div>
+                </div>
+                
+                <!-- Skill Item -->
+                <div class="scroll-reveal delay-300">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-lg font-medium text-neon-purple">Digital Creativity</span>
+                        <span class="text-lg font-bold text-white skill-percentage" data-progress="55">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="skill-creative" data-width="55%"></div>
+                    </div>
+                </div>
+                
+                <!-- Skill Item -->
+                <div class="scroll-reveal delay-400">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-lg font-medium text-neon-cyan">Entrepreneurship</span>
+                        <span class="text-lg font-bold text-white skill-percentage" data-progress="40">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="skill-biz" data-width="40%"></div>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+        
+        <div class="h-px bg-gradient-to-r from-transparent via-neon-cyan/50 to-transparent my-12"></div>
+        
+        <!-- 4. Projects & 5. Portfolio Showcase (Combined) -->
+        <section id="projects" class="py-20 px-4 max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center uppercase neon-text scroll-reveal">Digital Artifacts & Projects</h2>
+            
+            <!-- Category Filter Buttons -->
+            <div class="flex justify-center flex-wrap gap-4 mb-12 scroll-reveal">
+                <button data-filter="all" class="px-5 py-2 glass-card rounded-full text-sm font-semibold hover:bg-neon-cyan/20 active-filter">All</button>
+                <button data-filter="web" class="px-5 py-2 glass-card rounded-full text-sm font-semibold hover:bg-neon-cyan/20">Web Dev</button>
+                <button data-filter="ai" class="px-5 py-2 glass-card rounded-full text-sm font-semibold hover:bg-neon-cyan/20">AI/Automation</button>
+                <button data-filter="design" class="px-5 py-2 glass-card rounded-full text-sm font-semibold hover:bg-neon-cyan/20">Branding/Design</button>
+            </div>
+            
+            <!-- Projects Grid -->
+            <div id="projects-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Project 1: Quiz Web App (Web) -->
+                <div class="glass-card rounded-xl overflow-hidden project-item scroll-reveal" data-category="web">
+                    <div class="p-6">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-neon-cyan">Web Dev</span>
+                        <h3 class="text-xl font-bold mt-2 mb-2 text-white">Interactive Quiz App</h3>
+                        <p class="text-sm text-gray-400 mb-4">A fast, engaging web application built with pure **HTML, CSS, and vanilla JS**, focusing on DOM manipulation and state management for a smooth user experience.</p>
+                        <div class="flex flex-wrap gap-2 text-xs">
+                            <span class="bg-neon-purple/20 text-neon-purple px-2 py-1 rounded">HTML5</span>
+                            <span class="bg-neon-purple/20 text-neon-purple px-2 py-1 rounded">CSS3</span>
+                            <span class="bg-neon-purple/20 text-neon-purple px-2 py-1 rounded">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2: Login System (Web) -->
+                <div class="glass-card rounded-xl overflow-hidden project-item scroll-reveal delay-100" data-category="web">
+                    <div class="p-6">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-neon-cyan">Web Dev</span>
+                        <h3 class="text-xl font-bold mt-2 mb-2 text-white">Secure Login & Profile System</h3>
+                        <p class="text-sm text-gray-400 mb-4">Full-stack proof-of-concept for user authentication, session handling, and a personalized user profile page. (Mock API/Backend).</p>
+                        <div class="flex flex-wrap gap-2 text-xs">
+                            <span class="bg-neon-purple/20 text-neon-purple px-2 py-1 rounded">Full-stack</span>
+                            <span class="bg-neon-purple/20 text-neon-purple px-2 py-1 rounded">Database</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3: PJ Digi World Branding (Design) -->
+                <div class="glass-card rounded-xl overflow-hidden project-item scroll-reveal delay-200" data-category="design">
+                    <div class="p-6">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-neon-purple">Branding & Design</span>
+                        <h3 class="text-xl font-bold mt-2 mb-2 text-white">PJ Digi World Brand Identity</h3>
+                        <p class="text-sm text-gray-400 mb-4">Creation of logos, motion graphics, and a core color/style guide (Cyan/Purple Neon) using digital design tools and **AI-generated assets**.</p>
+                        <div class="flex flex-wrap gap-2 text-xs">
+                            <span class="bg-neon-cyan/20 text-neon-cyan px-2 py-1 rounded">Logo Design</span>
+                            <span class="bg-neon-cyan/20 text-neon-cyan px-2 py-1 rounded">AI Art</span>
+                            <span class="bg-neon-cyan/20 text-neon-cyan px-2 py-1 rounded">Motion GFX</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 4: Telegram Bot (AI) -->
+                <div class="glass-card rounded-xl overflow-hidden project-item scroll-reveal delay-300" data-category="ai">
+                    <div class="p-6">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-neon-cyan">AI/Automation</span>
+                        <h3 class="text-xl font-bold mt-2 mb-2 text-white">Telegram Automation Bot</h3>
+                        <p class="text-sm text-gray-400 mb-4">A custom Python bot utilizing the Telegram API for task automation, data scraping, and command-based interactions.</p>
+                        <div class="flex flex-wrap gap-2 text-xs">
+                            <span class="bg-neon-purple/20 text-neon-purple px-2 py-1 rounded">Python</span>
+                            <span class="bg-neon-purple/20 text-neon-purple px-2 py-1 rounded">Telegram API</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 5: MLBB Business Concept (Design) -->
+                <div class="glass-card rounded-xl overflow-hidden project-item scroll-reveal delay-400" data-category="design">
+                    <div class="p-6">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-neon-purple">Entrepreneurship</span>
+                        <h3 class="text-xl font-bold mt-2 mb-2 text-white">MLBB Diamond Top-up Concept</h3>
+                        <p class="text-sm text-gray-400 mb-4">A complete business model analysis, brand proposal, and simple landing page mockup for a mobile gaming currency service.</p>
+                        <div class="flex flex-wrap gap-2 text-xs">
+                            <span class="bg-neon-cyan/20 text-neon-cyan px-2 py-1 rounded">Business Plan</span>
+                            <span class="bg-neon-cyan/20 text-neon-cyan px-2 py-1 rounded">Design Mockup</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="h-px bg-gradient-to-r from-transparent via-neon-cyan/50 to-transparent my-12"></div>
+        
+        <!-- 6. Contact Section -->
+        <section id="contact" class="py-20 px-4 max-w-xl mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center uppercase neon-text scroll-reveal">Get in Touch</h2>
+            
+            <form class="space-y-6 scroll-reveal">
+                
+                <!-- Input Group: Name -->
+                <div>
+                    <label for="name" class="block text-sm font-medium mb-2 text-neon-cyan">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Your Digital Alias" required class="w-full p-3 rounded-lg bg-dark-bg/80 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-neon-purple shadow-neon-sm transition duration-300" style="--tw-ring-color: var(--neon-purple);">
+                </div>
+                
+                <!-- Input Group: Email -->
+                <div>
+                    <label for="email" class="block text-sm font-medium mb-2 text-neon-cyan">Email</label>
+                    <input type="email" id="email" name="email" placeholder="contact@example.com" required class="w-full p-3 rounded-lg bg-dark-bg/80 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-neon-purple shadow-neon-sm transition duration-300" style="--tw-ring-color: var(--neon-purple);">
+                </div>
+                
+                <!-- Input Group: Message -->
+                <div>
+                    <label for="message" class="block text-sm font-medium mb-2 text-neon-cyan">Message</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Let's build something futuristic together..." required class="w-full p-3 rounded-lg bg-dark-bg/80 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-neon-purple shadow-neon-sm transition duration-300" style="--tw-ring-color: var(--neon-purple);"></textarea>
+                </div>
+                
+                <!-- Submit Button -->
+                <button type="submit" class="w-full py-3 rounded-lg text-lg font-bold uppercase tracking-wider text-dark-bg transition-all duration-300 bg-neon-cyan hover:bg-white hover:shadow-neon-lg">
+                    Send Data Packet
+                </button>
+            </form>
+            
+            <!-- Telegram Link -->
+            <div class="mt-8 text-center scroll-reveal delay-100">
+                <p class="text-gray-400 mb-4">Or connect directly via Telegram:</p>
+                <a href="https://t.me/PjDPshop" target="_blank" class="inline-flex items-center text-neon-purple hover:text-white transition-colors duration-300 shadow-neon-sm p-3 rounded-lg glass-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                        <path d="M22 2l-7 20-4-9-9-4 20-7z" />
+                    </svg>
+                    @pjdigiworld
+                </a>
+            </div>
+        </section>
+        
+        <div class="h-px bg-gradient-to-r from-transparent via-neon-cyan/50 to-transparent my-12"></div>
+        
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-dark-bg/80 py-8 border-t border-neon-purple/20">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-sm text-gray-500 mb-6">&copy; 2025 PJ Digi World. Digital Innovation. All Systems Operational.</p>
+            
+            <!-- Social Links -->
+            <div class="flex justify-center space-x-6">
+                <!-- Telegram -->
+                <a href="https://t.me/pjdigiworld" target="_blank" class="text-gray-400 hover:text-neon-cyan transition duration-300 transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+                    </svg>
+                </a>
+                <!-- TikTok Placeholder -->
+                <a href="#" class="text-gray-400 hover:text-neon-cyan transition duration-300 transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 8a2 2 0 0 0-2-2h-3v5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5V6H9a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-5h3a2 2 0 0 0 2-2z" />
+                    </svg>
+                </a>
+                <!-- YouTube Placeholder -->
+                <a href="#" class="text-gray-400 hover:text-neon-cyan transition duration-300 transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21.5 8.35a2.5 2.5 0 0 0-3.53-3.53L12 12.06 6.03 6.47a2.5 2.5 0 0 0-3.53 3.53L8.47 15.65 3.17 21a2.5 2.5 0 1 0 3.53 3.53L12 19.44l5.3 5.3a2.5 2.5 0 1 0 3.53-3.53L15.53 15.65 21.5 8.35z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Core JavaScript for Interactivity -->
+    <script>
+        // --- 1. Particle Background Animation (Canvas) ---
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const numParticles = 70;
+        const maxDist = 150;
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        class Particle {
+            constructor(x, y) {
+                this.x = x || Math.random() * canvas.width;
+                this.y = y || Math.random() * canvas.height;
+                this.radius = Math.random() * 2 + 0.5;
+                this.velocity = {
+                    x: (Math.random() - 0.5) * 0.3,
+                    y: (Math.random() - 0.5) * 0.3
+                };
+                this.color = Math.random() > 0.5 ? 'rgba(0, 255, 255, 1)' : 'rgba(168, 85, 247, 1)';
+            }
+            
+            update() {
+                this.x += this.velocity.x;
+                this.y += this.velocity.y;
+                
+                if (this.x < 0 || this.x > canvas.width) this.velocity.x *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.velocity.y *= -1;
+            }
+            
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.shadowColor = this.color;
+                ctx.shadowBlur = 5;
+                ctx.fill();
+                ctx.shadowBlur = 0; // Reset shadow for lines
+            }
+        }
+        
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < numParticles; i++) {
+                particles.push(new Particle());
+            }
+        }
+        
+        function connectParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i; j < particles.length; j++) {
+                    const dist = Math.sqrt(Math.pow(particles[i].x - particles[j].x, 2) + Math.pow(particles[i].y - particles[j].y, 2));
+                    
+                    if (dist < maxDist) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(0, 255, 255, ${1 - dist / maxDist})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+        
+        function animateParticles() {
+            requestAnimationFrame(animateParticles);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            connectParticles();
+            
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        initParticles();
+        animateParticles();
+        
+        
+        // --- 2. Scroll-Based Animations (Intersection Observer) & Progress Bars ---
+        
+        function setupScrollReveals() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const skillProgressFill = document.querySelectorAll('.progress-fill');
+            const skillPercentages = document.querySelectorAll('.skill-percentage');
+            
+            // Observer for general scroll reveals
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.scroll-reveal').forEach(el => revealObserver.observe(el));
+            
+            // Observer for Skill Progress Bar animation
+            const skillObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Animate bars
+                        skillProgressFill.forEach(bar => {
+                            bar.style.width = bar.dataset.width;
+                        });
+                        // Animate numbers
+                        skillPercentages.forEach(span => {
+                            const target = parseInt(span.dataset.progress);
+                            let current = 0;
+                            const increment = target / 60; // 60 frames for a smooth 1s animation
+                            const interval = setInterval(() => {
+                                current += increment;
+                                if (current >= target) {
+                                    clearInterval(interval);
+                                    current = target;
+                                }
+                                span.textContent = `${Math.floor(current)}%`;
+                            }, 16.6); // ~60fps
+                        });
+                        observer.unobserve(entry.target); // Stop observing once animated
+                    }
+                });
+            }, {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.5 // Start animation when 50% visible
+            });
+            
+            const skillsSection = document.getElementById('skills');
+            if (skillsSection) skillObserver.observe(skillsSection);
+        }
+        
+        // --- 3. Navigation and Mobile Menu ---
+        
+        // Smooth scrolling for all nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                document.querySelector(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                if (document.getElementById('mobile-menu').classList.contains('flex')) {
+                    toggleMobileMenu();
+                }
+            });
+        });
+        
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('flex');
+            document.body.classList.toggle('overflow-hidden'); // Prevent background scrolling
+        }
+        
+        mobileMenuButton.addEventListener('click', toggleMobileMenu);
+        
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', toggleMobileMenu);
+        });
+        
+        // --- 4. Parallax Effect (Simple CSS/JS for Hero) ---
+        
+        window.addEventListener('scroll', () => {
+            const heroSection = document.getElementById('hero');
+            const scrolled = window.scrollY;
+            
+            // Adjust position of the content for a subtle parallax effect
+            if (heroSection) {
+                heroSection.style.transform = `translateY(${scrolled * 0.3}px)`;
+                heroSection.style.opacity = 1 - (scrolled * 0.002);
+            }
+            
+            // Hide/Show Navbar background on scroll
+            const navbar = document.getElementById('navbar');
+            if (scrolled > 50) {
+                navbar.classList.remove('glass-nav');
+                navbar.classList.add('bg-dark-bg/95');
+                navbar.classList.add('shadow-xl');
+            } else {
+                navbar.classList.add('glass-nav');
+                navbar.classList.remove('bg-dark-bg/95');
+                navbar.classList.remove('shadow-xl');
+            }
+        });
+        
+        // --- 5. Project Filter Logic ---
+        document.querySelectorAll('[data-filter]').forEach(button => {
+            button.addEventListener('click', function() {
+                const filter = this.dataset.filter;
+                document.querySelectorAll('[data-filter]').forEach(btn => btn.classList.remove('active-filter', 'bg-neon-cyan/20'));
+                this.classList.add('active-filter', 'bg-neon-cyan/20');
+                
+                document.querySelectorAll('.project-item').forEach(item => {
+                    item.style.display = 'none';
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = 'block';
+                    }
+                });
+            });
+        });
+        
+        // Initial setup on load
+        window.onload = () => {
+            setupScrollReveals();
+            
+            // Apply initial filter style
+            const allButton = document.querySelector('[data-filter="all"]');
+            if (allButton) allButton.classList.add('active-filter', 'bg-neon-cyan/20');
+            
+            // Since we're in a fixed dark theme, the toggle button just acts as a placeholder or changes the accent slightly.
+            document.getElementById('mode-toggle').addEventListener('click', () => {
+                alert('Mode toggle is disabled to maintain the core Neon Cyberpunk aesthetic. The system is currently running in optimal DARK mode.');
+            });
+        };
+    </script>
+</body>
+
+                      </html>
